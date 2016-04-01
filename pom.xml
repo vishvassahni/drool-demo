@@ -147,8 +147,6 @@
 					<path>/drool-demo</path>
 					<update>true</update>
 					<url>http://localhost:8080/manager/text</url>
-					<username>jenkinuser</username>
-					<password>jenkinuser</password>
 				</configuration>
 			</plugin>
 
