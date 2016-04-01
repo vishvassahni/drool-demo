@@ -1,0 +1,59 @@
+//created on: Mar 10, 2016
+package rules;
+
+// list any import classes here.
+import com.incedo.bean.ItemState;
+import java.math.BigDecimal;
+
+// declare any global variables here
+dialect "java"
+/******************************* START: Rules for Delhi State *********************************/
+rule "Delhi Fuel Item"
+   when
+      item : ItemState(typeofItem == ItemState.Type.PETROL)
+   then
+	  //Total Units
+      item.setUnit(item.getFuelAmount().divide(item.getUnitPrice(),2, BigDecimal.ROUND_HALF_UP));
+      
+      //Raw Crude Oil Cost
+   	  BigDecimal bigDecimal = new BigDecimal(.33);
+   	  BigDecimal taxType1= bigDecimal.multiply(item.getFuelAmount());
+   	  item.setTaxType1(taxType1.setScale(2, BigDecimal.ROUND_HALF_UP));
+   	  
+   	  //Refining Cost, Transportation, Freight, Dealer Commission
+   	  BigDecimal bigDecimal2 = new BigDecimal(.15);
+   	  BigDecimal taxType2= bigDecimal2.multiply(item.getFuelAmount());
+   	  item.setTaxType2(taxType2.setScale(2, BigDecimal.ROUND_HALF_UP));
+   	  
+   	  //Taxes - Excise, VAT, Cess
+   	  BigDecimal bigDecimal3 = new BigDecimal(.52);
+   	  BigDecimal taxType3= bigDecimal3.multiply(item.getFuelAmount());
+   	  item.setTaxType3(taxType3.setScale(2, BigDecimal.ROUND_HALF_UP));
+   	  
+end
+
+
+/******************************* START: Rules for UP State *********************************/
+rule "UP Fuel Item"
+   when
+      item : ItemState(typeofItem == ItemState.Type.DIESEL)
+   then
+   	  //Total Units
+      item.setUnit(item.getFuelAmount().divide(item.getUnitPrice(),2, BigDecimal.ROUND_HALF_UP));
+      
+      //Raw Crude Oil Cost
+   	  BigDecimal bigDecimal = new BigDecimal(.40);
+   	  BigDecimal taxType1= bigDecimal.multiply(item.getFuelAmount());
+   	  item.setTaxType1(taxType1.setScale(2, BigDecimal.ROUND_HALF_UP));
+   	  
+   	  //Refining Cost, Transportation, Freight, Dealer Commission
+   	  BigDecimal bigDecimal2 = new BigDecimal(.20);
+   	  BigDecimal taxType2= bigDecimal2.multiply(item.getFuelAmount());
+   	  item.setTaxType2(taxType2.setScale(2, BigDecimal.ROUND_HALF_UP));
+   	  
+   	  //Taxes - Excise, VAT, Cess
+   	  BigDecimal bigDecimal3 = new BigDecimal(.40);
+   	  BigDecimal taxType3= bigDecimal3.multiply(item.getFuelAmount());
+   	  item.setTaxType3(taxType3.setScale(2, BigDecimal.ROUND_HALF_UP));
+
+end
